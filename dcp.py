@@ -42,11 +42,22 @@ def set_param(s, src, target, param, value):
     
     if param not in params.keys():
         return
-    
+    payload = bytes()
+    if param == 'name':
+        payload = bytes(value, encoding='ascii')
+    elif param == 'ip':
+        # assuming value in format ip,nm,gw eg.: 192.168.1.15,255.255.255.0,192.168.1.1
+        vals = list()
+        for address in value.split(','):
+            for octet in address.split('.'):
+                vals.append(int(octet))
+        
+        payload = bytes(vals)
+
     param = params[param]
-    
-    block = PNDCPBlockRequest(param[0], param[1], len(value) + 2, bytes([0x00, 0x00]) + bytes(value, encoding='ascii'))
-    dcp   = PNDCPHeader(0xfefd, PNDCPHeader.SET, PNDCPHeader.REQUEST, 0x012345, 255, len(value) + 6 + (1 if len(value) % 2 == 1 else 0), block)
+    # value = [0xC0, 0xA8, 0x03, 0x62, 0xFF, 0xFF, 0xFF, 0x00,0xC0, 0xA8, 0x03, 0x1 ] 
+    block = PNDCPBlockRequest(param[0], param[1], len(payload) + 2, bytes([0x00, 0x00]) + bytes(payload))
+    dcp   = PNDCPHeader(0xfefd, PNDCPHeader.SET, PNDCPHeader.REQUEST, 0x012345, 255, len(payload) + 6 + (1 if len(payload) % 2 == 1 else 0), block)
     eth   = EthernetVLANHeader(dst, src, 0x8100, 0, PNDCPHeader.ETHER_TYPE, dcp)
     
     s.send(bytes(eth))

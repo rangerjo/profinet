@@ -14,7 +14,7 @@ Wireshark filter: `pn_dcp`
 
 `sudo python main.py -i eth0 get-param 00:30:11:33:d7:1a ip`
 
-Setting the ip-adress does not work yet.
+`sudo python main.py -i eth0 set-param 00:30:11:33:d7:1a ip 192.168.1.15,255.255.255.0,192.168.1.1`
 
 ### Cyclic data
 
