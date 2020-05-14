@@ -2,10 +2,10 @@ from struct import unpack
 from socket import MSG_WAITALL
 from datetime import datetime
 
-from util import *
-from protocol import *
+from pyprofinet.util import *
+from pyprofinet.protocol import *
 
-import dcp
+import pyprofinet.dcp
 
 
 def get_station_info(s, src, name):

@@ -1,7 +1,7 @@
 from collections import namedtuple
 
 
-from util import *
+from .util import *
 
 
 # ----------------------------------------------------------------------------------------------
