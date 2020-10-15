@@ -34,7 +34,7 @@ def get_param(s, src, target, param):
     eth   = EthernetVLANHeader(dst, src, 0x8100, 0, PNDCPHeader.ETHER_TYPE, dcp)
     
     s.send(bytes(eth))
-    
+
     return list(read_response(s, src, once=True).values())[0][param]
 
 def set_param(s, src, target, param, value):

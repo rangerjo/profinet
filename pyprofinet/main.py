@@ -1,8 +1,8 @@
 import argparse
 
 
-import pyprofinet.dcp
-import pyprofinet.rpc
+import pyprofinet.dcp as dcp
+import pyprofinet.rpc as rpc
 
 from pyprofinet.util import *
 from pyprofinet.protocol import *
